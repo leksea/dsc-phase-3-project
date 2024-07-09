@@ -27,13 +27,12 @@
 - [ Data Overview](#-info-data)    
 - [ Data Cleaning and Transformation](#-cleaning-data)
 - [ Training Binary Classifier on Data](#-logreg-data)
-- [ Contributing](#-contributing)
+- [ Conclusion](#-conclusion)
 - [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
 </details>
 <hr>
 
-##  Overview
+##  [Overview](#-overview)
 
 The objective is to perform an independent evaluation of the effectiveness of ongoing racial diversity training among the officers of the Seattle Police Department. The evaluation aims to identify areas that need improvement.
 
@@ -61,8 +60,8 @@ The solution involves using the SFPD Terry Stops Dataset to create a logistic re
 
 The datasets required for this analysis are pre-downloaded into the `/data` folder:
 
-1. **Seattle Terry Stops**
-2. **Seattle's Racial and Social Equity Index**
+1. **[Seattle Terry Stops](https://www.seattle.gov/police/information-and-data/data/terry-stops)**
+2. **[Seattle's Racial and Social Equity Index](https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::racial-and-social-equity-composite-index-current-for-countywide-comparisons/about)**
 3. **SEA_Beats_Tracts_Neighborhoods.csv**
 4. **ArcGIS Shapefiles for Census and Police Beats**:
     - [Seattle's Police Beats](https://data.seattle.gov/Public-Safety/Police-Beats/jz4h-3af5)
@@ -82,7 +81,7 @@ The analysis uses the following datasets:
    - Whether a frisk or search was conducted
    - Contraband or weapons found
 
-   However, it does not include geographical information beyond the precinct and beat. Seattle has five police precincts, and beats are more granular and assigned to neighborhoods.
+   However, it does not include geographical information beyond the precinct and beat. Seattle has five police precincts; beats are more granular and assigned to neighborhoods.
 
 2. **Racial and Social Equity Index Dataset**: This dataset uses tract numbers (US Census Unit) as neighborhood identifiers and includes metrics of Racial, Socioeconomic, and Health Disadvantage Indexes.
 
@@ -100,7 +99,7 @@ The challenge is to map police beats to tract numbers to add more information ab
 
 The data cleaning and transformation process involves several steps to prepare the datasets for analysis:
 
-#### 1. Creating Dataset with Geographic Mapping
+#### 1. Creating a Dataset with Geographic Mapping
 - **Loading Shapefiles**: Loaded shapefiles for Seattle's Beats and Census Tracts.
 - **Combining Datasets**: Combined datasets into `SEA_Beats_Tracts_Neighborhoods.csv` for later use.
 - **Geographic Identifiers**: Created a dataset matching the following geographic identifiers: beat, TRACTCE10, and GEOID10.
@@ -148,14 +147,15 @@ By following these steps, the dataset was prepared for subsequent logistic regre
 ---
 ### Training Binary Classifier on Data
 
-### Training Binary Classifier on Data
-
 #### 1. Checking Dataset for Fair Representation
+
+![Distribution of Stop Resolution](Readme_files/Untitled_32_1.png)
 
 Objective: Analyze subject demographics representation and use synthetic data (SMOTE) to add underrepresented categories.
 
 - **Data Visualization**: Used count plots to visualize the distribution of arrests and frisks by subject and officer demographics (age, race, gender).
 - **Observations**: Identified underrepresentation in certain race, age categories, and genders, prompting the use of SMOTE to add synthetic data.
+
 
 #### 2. Importing Libraries, Adding Synthetic Data, Splitting into Train/Test
 
@@ -173,13 +173,15 @@ Objective: Analyze subject demographics representation and use synthetic data (S
 - **Initial Distribution**: 15% of the data represented arrests.
 - **SMOTE Application**: Balanced the training data by oversampling the minority class (arrests).
 - **Result**: Both classes (arrests and non-arrests) had equal representation post-SMOTE.
-
+![Distribution of Dependent Variable (Arrest Before and After SMOTE)](Readme_files/Untitled_83_0.png)
+ 
 #### 4. Training Basic Logistic Regression Classifier
 
 - **Model**: Logistic regression with a ridge penalty to address convergence issues.
 - **Evaluation**:
   - Convergence achieved with ridge penalty.
-  - Analyzed model summary, identified significant coefficients impacting arrest likelihood.
+  - Analyzed model summary, and identified significant coefficients impacting arrest likelihood.
+  - 
   - Model exhibited poor performance in explaining variability (high negative log-likelihood, small pseudo R2).
 
 #### 5. Classifier Performance Evaluation
@@ -187,7 +189,7 @@ Objective: Analyze subject demographics representation and use synthetic data (S
 - **Predictions**: Converted predicted probabilities to binary outcomes.
 - **Metrics**:
   - Precision, recall, and F1-score were calculated for both classes (arrested and not arrested).
-  - Model performed well for not arrested class (high precision and recall), poorly for arrested class (low precision and moderate recall).
+  - Model performed well for the not arrested class (high precision and recall), and poorly for the arrested class (low precision and moderate recall).
 
 #### 6. Improving the Basic Classifier
 
@@ -202,6 +204,8 @@ Objective: Analyze subject demographics representation and use synthetic data (S
 - **Metrics**:
   - Class 0 (Not Arrested): High precision and recall, indicating accurate predictions.
   - Class 1 (Arrested): Low precision and moderate recall, indicating poor performance in predicting arrests.
+![Confustion Matrix for the Logistic Regression](Readme_files/Untitled_101_1.png)
+  
 
 #### 8. Fitting Decision Tree Model
 
@@ -210,7 +214,9 @@ Objective: Analyze subject demographics representation and use synthetic data (S
 - **Best Parameters**: Max depth of 10, min samples leaf of 5, min samples split of 20.
 - **Performance**:
   - Class 0 (Not Arrested): High precision and recall, indicating good performance.
-  - Class 1 (Arrested): Low precision and recall, indicating poor performance in predicting arrests.
+  - Class 1 (Arrested): Low precision and recall, indicating poor arrest prediction performance.
+![Confustion Matrix for the Decision Tree](Readme_files/Untitled_107_2.png)
+
 ---
 
 ## Conclusion on Model Performance
@@ -223,13 +229,11 @@ Objective: Analyze subject demographics representation and use synthetic data (S
 
 ##  License
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+This project is protected under the [MIT License](https://choosealicense.com/licenses) License. 
+For more details, refer to the [MIT License](https://choosealicense.com/licenses/) file.
 
 ---
 
-##  Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
 
 [**Return**](#-overview)
 
