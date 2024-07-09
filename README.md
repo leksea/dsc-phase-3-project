@@ -48,6 +48,8 @@ The solution involves using the SFPD Terry Stops Dataset to create a logistic re
 └── dsc-phase-3-project/
     ├── Presentation1.pdf
     ├── README.md
+    ├── Readme_files
+	├── ...*.png 
     ├── Untitled.ipynb
     └── data
         ├── Race_and_Social_Equity_Composite_Index_Current_3629710440579811501.csv
